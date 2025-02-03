@@ -1,4 +1,4 @@
-import Dd from "@/dd";
+import Dd from '@/components/dd';
 
 function App() {
   return (
