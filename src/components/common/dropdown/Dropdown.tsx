@@ -1,4 +1,4 @@
-import { DropdownContext } from '@/components/common/dropdown/DropdownContext';
+import { DropdownContext } from '@/components/common/Dropdown/DropdownContext';
 import useClickOutSide from '@/hooks/useClickOutside';
 import { ReactNode, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -21,6 +21,7 @@ const S = {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    color: ${({ theme }) => theme.colors.black[200]};
     display: flex;
     align-items: center;
     gap: 2rem;
