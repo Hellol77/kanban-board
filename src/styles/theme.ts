@@ -4,7 +4,6 @@ const theme = {
       100: '#515151',
       200: '#3A3A3A',
       text1: '#000000',
-      text2: '#3A3A3A',
     },
     gray: {
       100: '#666666',
@@ -18,6 +17,13 @@ const theme = {
     },
     purple: '#7C0491',
     buttonBackGround: '#F1F1F1',
+  },
+  fontSizes: {
+    h1: '2.4rem',
+    h2: '1.8rem',
+    body1: '1.4rem',
+    body2: '1.3rem',
+    sub: '1.2rem',
   },
 };
 

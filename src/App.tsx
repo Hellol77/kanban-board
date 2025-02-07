@@ -1,8 +1,7 @@
 import Header from '@/components/header/Header';
-import PageLayout from '@/components/layout/PageLayout';
+import PageLayout from '@/components/common/layout/PageLayout';
 import Logo from '@/assets/btheegg.svg?react';
-import { Dropdown } from '@/components/common';
-import ContentWrapper from '@/components/common/Wrapper/ContentWrapper';
+import { Dropdown, ContentWrapper, Text } from '@/components/common';
 import ProfileIcon from '@/assets/avatar.svg?react';
 import ArrowDownIcon from '@/assets/arrowDown.svg?react';
 function App() {
@@ -15,7 +14,9 @@ function App() {
             <Dropdown>
               <ProfileIcon />
               <Dropdown.Button>
-                <span>원동현님</span>
+                <Text variant='profile' color='profileBlack'>
+                  원동현님
+                </Text>
                 <ArrowDownIcon />
               </Dropdown.Button>
               <Dropdown.List>
@@ -25,7 +26,11 @@ function App() {
             </Dropdown>
           }
         />
-        <ContentWrapper>dd</ContentWrapper>
+        <ContentWrapper>
+          <Text variant='body2' color='purple'>
+            dd
+          </Text>
+        </ContentWrapper>
       </PageLayout>
     </>
   );
