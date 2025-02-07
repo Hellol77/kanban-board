@@ -1,9 +1,9 @@
-import Wetsfw from './ddd/Wetsfw';
+import Logo from '@/assets/btheegg.svg?react';
 
 const Dd = () => {
   return (
     <div>
-      <Wetsfw />
+      <Logo />
     </div>
   );
 };

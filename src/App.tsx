@@ -1,11 +1,12 @@
+import PageLayout from '@/components/common/layout/PageLayout';
 import Dd from '@/components/dd';
 
 function App() {
   return (
     <>
-      <div>
+      <PageLayout>
         <Dd />
-      </div>
+      </PageLayout>
     </>
   );
 }
