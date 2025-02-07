@@ -9,6 +9,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 html {
+  font-size: 62.5%;
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
@@ -27,8 +28,8 @@ dd {
   margin-block-end: 0;
 }
 
-ul[role="list"],
-ol[role="list"] {
+ul,
+ol {
   list-style: none;
 }
 
@@ -36,7 +37,6 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   margin: 0;
-  font-size: 62.5%;
 }
 
 h1,
@@ -115,5 +115,6 @@ textarea:not([rows]) {
 body {
   font-family: "Pretendard", sans-serif;
   font-weight: 400;
+
 }
 `;

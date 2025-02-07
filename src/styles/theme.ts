@@ -11,6 +11,11 @@ const theme = {
       200: '#F5F5F5',
       text1: '#979797',
     },
+    white: {
+      100: '#FFFFFF',
+      200: '#F8F8F8',
+      300: '#E5E7EB',
+    },
     purple: '#7C0491',
     buttonBackGround: '#F1F1F1',
   },
