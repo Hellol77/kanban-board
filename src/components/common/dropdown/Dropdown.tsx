@@ -58,7 +58,7 @@ const S = {
     padding: 1.2rem 0;
     border: 1px solid ${({ theme }) => theme.colors.white[100]};
     &:hover {
-      background-color: ${({ theme }) => theme.colors.gray[200]};
+      background-color: ${({ theme }) => theme.colors.gray[100]};
       border: 1px solid ${({ theme }) => theme.colors.white[300]};
     }
   `,

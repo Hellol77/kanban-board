@@ -6,8 +6,8 @@ const theme = {
       text1: '#000000',
     },
     gray: {
-      100: '#666666',
-      200: '#F5F5F5',
+      100: '#F5F5F5',
+      200: '#666666',
       text1: '#979797',
     },
     white: {
@@ -15,7 +15,11 @@ const theme = {
       200: '#F8F8F8',
       300: '#E5E7EB',
     },
-    purple: '#7C0491',
+    purple: { 100: '#F5F2F6', 200: '#7C0491' },
+    blue: {
+      100: '#F1F6FD',
+      200: '#0052EA',
+    },
     buttonBackGround: '#F1F1F1',
   },
   fontSizes: {

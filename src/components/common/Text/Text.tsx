@@ -49,7 +49,7 @@ const colorMap = {
     color: ${({ theme }) => theme.colors.white[100]};
   `,
   purple: css`
-    color: ${({ theme }) => theme.colors.purple};
+    color: ${({ theme }) => theme.colors.purple[200]};
   `,
 };
 

@@ -3,9 +3,14 @@ import styled from 'styled-components';
 
 const S = {
   Wrapper: styled.div`
-    max-width: 80rem;
+    max-width: 90rem;
+    padding: 0 5rem;
     height: 100vh;
-    margin: 0 auto;
+    margin: 6.4rem auto;
+    @media screen and (max-width: 768px) {
+      padding: 0 1.2rem;
+      margin: 2rem auto;
+    }
   `,
 };
 
