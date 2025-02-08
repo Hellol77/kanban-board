@@ -1,9 +1,9 @@
 import Header from '@/components/header/Header';
-import PageLayout from '@/components/common/layout/PageLayout';
 import Logo from '@/assets/btheegg.svg?react';
-import { Dropdown, ContentWrapper, Text } from '@/components/common';
+import { Dropdown, ContentWrapper, Text, PageLayout } from '@/components/common';
 import ProfileIcon from '@/assets/avatar.svg?react';
 import ArrowDownIcon from '@/assets/arrowDown.svg?react';
+import KanbanList from '@/components/KanbanList/KanbanList';
 function App() {
   return (
     <>
@@ -27,9 +27,7 @@ function App() {
           }
         />
         <ContentWrapper>
-          <Text variant='body2' color='purple'>
-            dd
-          </Text>
+          <KanbanList />
         </ContentWrapper>
       </PageLayout>
     </>
