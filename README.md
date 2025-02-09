@@ -1,50 +1,17 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+# 주요 기능 요구사항
+- [x] 프로젝트 제목 수정
+    - [x] 프로젝트의 제목을 사용자가 수정할 수 있어야 합니다.
+- [x] 컬럼 추가 및 삭제
+    - [x] 기본 컬럼(시작 전, 진행 중, 완료)이외에 새로운 컬럼을 추가, 삭제할 수 있습니다.
+    - [x] 단, 기본 컬럼(시작 전, 진행 중, 완료)은 삭제할 수 없습니다.
+- [x] 카드 추가 및 수정, 삭제
+    - [x] 각 컬럼에 새로운 카드를 추가할 수 있습니다.
+    - [x] 추가된 카드는 사용자가 수정하거나 삭제할 수 있어야 합니다.
+- [x] 카드 이동
+    - [x] 드래그 앤 드롭을 통해 카드를 컬럼 간 이동하거나, 같은 컬럼 내에서 순서를 변경할 수 있어야 합니다. Drag & Drop 기능을 라이브러리 없이 구현하면 가산점이 부여됩니다.
+- [x] 상태 저장
+    - [x] **로컬 스토리지(또는 다른 저장 방식 활용 가능)**를 통해 보드 상태를 저장하고 유지할 수 있어야 합니다.
+- [x] 반응형 디자인 지원
+    - [x] 다양한 해상도에서 UI가 자연스럽게 표시될 수 있도록 반응형을 고려해주세요.
+    - [x] 모바일, 태블릿 환경에서도 사용할 수 있도록 개선하면 더욱 완성도가 높아집니다.
