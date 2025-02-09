@@ -24,18 +24,34 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+    transform: translate(0, 0);
     &:hover {
       background-color: ${({ theme }) => theme.colors.white[300]};
     }
     &.dragging {
-      opacity: 0.5;
+      opacity: 0.8;
+      transform: scale(1.03) rotate(1deg);
       cursor: grabbing;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.white[300]};
+      cursor: grab;
+    }
+
+    /* 드롭 타겟 표시를 위한 스타일 */
     &.drop-target-top {
       border-top: 2px solid ${({ theme }) => theme.colors.gray[200]};
+      transform: translateY(5px);
     }
+
     &.drop-target-bottom {
       border-bottom: 2px solid ${({ theme }) => theme.colors.gray[200]};
+      transform: translateY(-5px);
     }
   `,
 

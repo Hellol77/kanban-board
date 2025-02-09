@@ -23,6 +23,7 @@ const S = {
     &.drop-target {
       background-color: ${({ theme }) => theme.colors.white[300]};
     }
+    transition: background-color 0.4s ease;
   `,
 };
 
