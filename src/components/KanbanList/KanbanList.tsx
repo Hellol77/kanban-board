@@ -169,7 +169,7 @@ const KanbanList = () => {
                 ...list.cards,
                 {
                   id: list.cards.length + 1,
-                  tag: { tagName: 'tag1', color: 'black' },
+                  tag: { tagName: '무제', color: 'black' },
                   description: '',
                 },
               ],
@@ -360,9 +360,19 @@ const KanbanList = () => {
                 onDragStart={(e) => handleDragStart(e, list.listId, card.id)}
                 onDragEnd={handleDragEnd}
               >
-                <S.XIcon width={14} height={14} onClick={() => onClickDeleteItem(list.listId, card.id)} />
+                <S.XIcon
+                  aria-label='카드 삭제'
+                  width={14}
+                  height={14}
+                  onClick={() => onClickDeleteItem(list.listId, card.id)}
+                />
                 {!card.tag?.tagName && (
-                  <S.TagPlusIcon width={16} height={16} onClick={() => onClickAddTag(list.listId, card.id)} />
+                  <S.TagPlusIcon
+                    aria-label='태그 추가'
+                    width={16}
+                    height={16}
+                    onClick={() => onClickAddTag(list.listId, card.id)}
+                  />
                 )}
                 {card.tag?.tagName && (
                   <TagInput
