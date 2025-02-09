@@ -111,6 +111,6 @@ select {
 body {
   font-family: "Pretendard", sans-serif;
   font-weight: 400;
-
+  height: 100vh;
 }
 `;

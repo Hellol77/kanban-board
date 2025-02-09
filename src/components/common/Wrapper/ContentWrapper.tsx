@@ -6,6 +6,7 @@ const S = {
     width: 100%;
     max-width: 120rem;
     margin: 0 auto;
+    height: 100%;
   `,
 };
 

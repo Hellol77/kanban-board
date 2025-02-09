@@ -5,6 +5,7 @@ const S = {
   Wrapper: styled.div`
     max-width: 90rem;
     padding: 0 5rem;
+    height: 100%;
     margin: 6.4rem auto;
     margin-bottom: 0;
     padding-bottom: 4rem;

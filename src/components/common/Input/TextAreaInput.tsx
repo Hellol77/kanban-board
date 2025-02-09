@@ -11,8 +11,9 @@ const S = {
     color: ${({ theme }) => theme.colors.black.text1};
     font-weight: 400;
     height: 4rem;
+    border-radius: 4px;
     &:hover {
-      background-color: ${({ theme }) => theme.colors.white[300]};
+      background-color: ${({ theme }) => theme.colors.gray[100]};
     }
     &:focus {
       outline: none;
