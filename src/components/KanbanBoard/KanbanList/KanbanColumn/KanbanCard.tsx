@@ -9,6 +9,7 @@ import DotsHorizontal from '@/assets/dotsHorizontal.svg?react';
 import useClickOutSide from '@/hooks/useClickOutside';
 import { TAG_COLORS } from '@/constants/color';
 import { TagColorType } from '@/types/color';
+import { motion } from 'framer-motion';
 interface KanbanCardProps {
   columnId: string;
   card: CardType;
@@ -16,6 +17,8 @@ interface KanbanCardProps {
 }
 
 const S = {
+  MotionDiv: styled(motion.div)``,
+
   ListItem: styled.article`
     position: relative;
     background-color: ${({ theme }) => theme.colors.white[100]};
@@ -279,51 +282,63 @@ const KanbanCard = ({ columnId, card, index }: KanbanCardProps) => {
   };
 
   return (
-    <S.ListItem
+    <S.MotionDiv
+      layout
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.8, opacity: 0 }}
+      transition={{ type: 'spring' }}
       key={card.id}
-      ref={cardRef}
-      draggable
-      onDragStart={(e) => handleDragStart(e, columnId, card.id)}
-      onDragEnd={handleDragEnd}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
     >
-      <S.XIcon aria-label='카드 삭제' width={14} height={14} onClick={() => onClickDeleteItem(columnId, card.id)} />
-      {card.tag?.tagName && (
-        <S.dotsHorizontal
-          onClick={() => setIsSettingOpen((prev) => !prev)}
-          aria-label='태그 추가'
-          width={16}
-          height={16}
-        />
-      )}
-      {isSettingOpen && card.tag && (
-        <S.SettingModal ref={settingModalRef}>
-          {TAG_COLORS.map((color) => (
-            <Circle key={color} color={color} onClick={() => onClickTagColor(color, columnId, card.id)} />
-          ))}
-        </S.SettingModal>
-      )}
-      {!card.tag && (
-        <S.TagPlusIcon aria-label='태그 추가' width={16} height={16} onClick={() => onClickAddTag(columnId, card.id)} />
-      )}
-      {card.tag && (
-        <TagInput
-          color={card.tag.color}
-          value={card.tag.tagName}
-          onChange={(e) => onChangeTagName(e.target.value, columnId, card.id)}
-          onBlur={() => handleTagBlur(columnId, card.id)}
-        />
-      )}
-      <TextAreaInput
-        placeholder='카드 설명을 입력해주세요.'
-        value={card?.description || ''}
-        onChange={(e) => onChangeCardDescription(e.target.value, columnId, card.id)}
+      <S.ListItem
+        ref={cardRef}
+        draggable
+        onDragStart={(e) => handleDragStart(e, columnId, card.id)}
+        onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
       >
-        {card.description}
-      </TextAreaInput>
-    </S.ListItem>
+        <S.XIcon aria-label='카드 삭제' width={14} height={14} onClick={() => onClickDeleteItem(columnId, card.id)} />
+        {card.tag?.tagName && (
+          <S.dotsHorizontal
+            onClick={() => setIsSettingOpen((prev) => !prev)}
+            aria-label='태그 추가'
+            width={16}
+            height={16}
+          />
+        )}
+        {isSettingOpen && card.tag && (
+          <S.SettingModal ref={settingModalRef}>
+            {TAG_COLORS.map((color) => (
+              <Circle key={color} color={color} onClick={() => onClickTagColor(color, columnId, card.id)} />
+            ))}
+          </S.SettingModal>
+        )}
+        {!card.tag && (
+          <S.TagPlusIcon
+            aria-label='태그 추가'
+            width={16}
+            height={16}
+            onClick={() => onClickAddTag(columnId, card.id)}
+          />
+        )}
+        {card.tag && (
+          <TagInput
+            color={card.tag.color}
+            value={card.tag.tagName}
+            onChange={(e) => onChangeTagName(e.target.value, columnId, card.id)}
+            onBlur={() => handleTagBlur(columnId, card.id)}
+          />
+        )}
+        <TextAreaInput
+          placeholder='카드 설명을 입력해주세요.'
+          value={card?.description || ''}
+          onChange={(e) => onChangeCardDescription(e.target.value, columnId, card.id)}
+        >
+          {card.description}
+        </TextAreaInput>
+      </S.ListItem>
+    </S.MotionDiv>
   );
 };
 

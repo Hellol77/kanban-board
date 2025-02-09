@@ -125,7 +125,7 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@emotion/is-prop-valid@1.2.2":
+"@emotion/is-prop-valid@*", "@emotion/is-prop-valid@1.2.2":
   version "1.2.2"
   resolved "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-1.2.2.tgz"
   integrity sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==
@@ -1064,6 +1064,15 @@ for-each@^0.3.3:
   dependencies:
     is-callable "^1.2.7"
 
+framer-motion@^12.4.1:
+  version "12.4.1"
+  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-12.4.1.tgz"
+  integrity sha512-5Ijbea3topSZjadQ0hgc/TcWj2ldMZmNREM7RvAhvsThYOA1HHOA8TT1yKvMu1YXP3jWaFwoZ6Vo9Nw+DUZrzA==
+  dependencies:
+    motion-dom "^12.0.0"
+    motion-utils "^12.0.0"
+    tslib "^2.4.0"
+
 fsevents@~2.3.2, fsevents@~2.3.3:
   version "2.3.3"
 
@@ -1444,6 +1453,26 @@ minimatch@^9.0.4:
   dependencies:
     brace-expansion "^2.0.1"
 
+motion-dom@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.npmjs.org/motion-dom/-/motion-dom-12.0.0.tgz"
+  integrity sha512-CvYd15OeIR6kHgMdonCc1ihsaUG4MYh/wrkz8gZ3hBX/uamyZCXN9S9qJoYF03GqfTt7thTV/dxnHYX4+55vDg==
+  dependencies:
+    motion-utils "^12.0.0"
+
+motion-utils@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.npmjs.org/motion-utils/-/motion-utils-12.0.0.tgz"
+  integrity sha512-MNFiBKbbqnmvOjkPyOKgHUp3Q6oiokLkI1bEwm5QA28cxMZrv0CbbBGDNmhF6DIXsi1pCQBSs0dX8xjeER1tmA==
+
+motion@^12.4.1:
+  version "12.4.1"
+  resolved "https://registry.npmjs.org/motion/-/motion-12.4.1.tgz"
+  integrity sha512-TBnf5NyZVZFOHOc87fyC6qTSU+6LUe09LwxA1Sna35YL7qgOv1EZv96mu6o7uQ2Rl1GvTSQLeyfrQAEG+zlh+w==
+  dependencies:
+    framer-motion "^12.4.1"
+    tslib "^2.4.0"
+
 ms@^2.1.3:
   version "2.1.3"
 
@@ -1621,7 +1650,7 @@ punycode@^2.1.0:
 queue-microtask@^1.2.2:
   version "1.2.3"
 
-react-dom@^18.3.1, "react-dom@>= 16.8.0":
+"react-dom@^18.0.0 || ^19.0.0", react-dom@^18.3.1, "react-dom@>= 16.8.0":
   version "18.3.1"
   dependencies:
     loose-envify "^1.1.0"
@@ -1633,7 +1662,7 @@ react-is@^16.13.1:
 react-refresh@^0.14.2:
   version "0.14.2"
 
-react@^18.3.1, "react@>= 16.8.0":
+"react@^18.0.0 || ^19.0.0", react@^18.3.1, "react@>= 16.8.0":
   version "18.3.1"
   dependencies:
     loose-envify "^1.1.0"
@@ -1920,7 +1949,7 @@ ts-api-utils@^2.0.0:
 tsconfck@^3.0.3:
   version "3.1.4"
 
-tslib@^2.0.3, tslib@^2.6.2:
+tslib@^2.0.3, tslib@^2.4.0, tslib@^2.6.2:
   version "2.8.1"
 
 tslib@2.6.2:

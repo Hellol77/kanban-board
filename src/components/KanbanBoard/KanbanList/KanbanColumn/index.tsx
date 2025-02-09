@@ -5,12 +5,15 @@ import styled from 'styled-components';
 import EmptyColumn from '@/components/KanbanBoard/KanbanList/KanbanColumn/EmptyColumn';
 import KanbanCard from '@/components/KanbanBoard/KanbanList/KanbanColumn/KanbanCard';
 import { KanbanActionsContext, KanbanDataContext } from '@/components/KanbanBoard/KanbanContext';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface KanbanColumnProps {
   column: KanbanColumnType;
 }
 
 const S = {
+  MotionDiv: styled(motion.div)``,
+
   ListColumn: styled.section`
     display: flex;
     flex-direction: column;
@@ -72,13 +75,15 @@ const KanbanColumn = ({ column }: KanbanColumnProps) => {
     columnRef.current.classList.remove('drop-target');
   };
   return (
-    <S.ListColumn ref={columnRef} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
-      <ColumnHeader column={column} setData={setData} />
-      {column.cards.length === 0 && <EmptyColumn columnId={column.columnId} />}
-      {column.cards.map((card, index) => (
-        <KanbanCard key={card.id} card={card} columnId={column.columnId} index={index} />
-      ))}
-    </S.ListColumn>
+    <AnimatePresence>
+      <S.ListColumn ref={columnRef} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
+        <ColumnHeader column={column} setData={setData} />
+        {column.cards.length === 0 && <EmptyColumn columnId={column.columnId} />}
+        {column.cards.map((card, index) => (
+          <KanbanCard key={card.id} card={card} columnId={column.columnId} index={index} />
+        ))}
+      </S.ListColumn>
+    </AnimatePresence>
   );
 };
 
