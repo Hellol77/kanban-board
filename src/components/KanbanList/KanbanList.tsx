@@ -291,7 +291,7 @@ const KanbanList = () => {
               {list.cards.length !== 0 && (
                 <Button onClick={() => onClickAddCard(list.listId)} icon={<PlusIcon />} aria-label='카드 추가' />
               )}
-              {list.cards.length === 0 && (
+              {list.cards.length === 0 && list.listId > 3 && (
                 <Button
                   onClick={() => onClickDeleteListColumn(list.listId)}
                   icon={<XIcon width={16} />}
