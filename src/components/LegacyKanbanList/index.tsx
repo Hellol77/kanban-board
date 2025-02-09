@@ -1,11 +1,12 @@
 import { Badge, Button, KanbanWrapper, TagInput, Text, TextAreaInput, TextInput } from '@/components/common';
-import { KanbanDataType } from '@/types/kanban';
+import { DraggedItemType, KanbanDataType } from '@/types/kanban';
 import { DragEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PlusIcon from '@/assets/plus.svg?react';
 import XIcon from '@/assets/x.svg?react';
 import TagPlusIcon from '@/assets/tagPlus.svg?react';
 import INITIAL_DATA from '@/data/initialData';
+import { v4 as uuidv4 } from 'uuid';
 
 const S = {
   ListWrapper: styled.div`
@@ -127,17 +128,14 @@ const LegacyKanbanList = () => {
     const localData = localStorage.getItem('kanban');
     return localData ? JSON.parse(localData) : INITIAL_DATA;
   });
-  const [draggedItem, setDraggedItem] = useState<{
-    sourcecolumnId: number;
-    cardId: number;
-  } | null>(null);
+  const [draggedItem, setDraggedItem] = useState<DraggedItemType | null>(null);
   useEffect(() => {
     localStorage.setItem('kanban', JSON.stringify(data));
   }, [data]);
 
   const onChangeProjectName = (value: string) => setData((prev) => ({ ...prev, projectName: value }));
 
-  const onChangeColumnTitle = (value: string, id: number) => {
+  const onChangeColumnTitle = (value: string, id: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -146,7 +144,7 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const onChangeCardDescription = (value: string, columnId: number, cardId: number) => {
+  const onChangeCardDescription = (value: string, columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -160,7 +158,7 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const onClickAddCard = (columnId: number) => {
+  const onClickAddCard = (columnId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -170,7 +168,7 @@ const LegacyKanbanList = () => {
               cards: [
                 ...column.cards,
                 {
-                  id: column.cards.length + 1,
+                  id: uuidv4(),
                   tag: { tagName: '무제', color: 'black' },
                   description: '',
                 },
@@ -187,7 +185,7 @@ const LegacyKanbanList = () => {
       kanbanColumns: [
         ...prev.kanbanColumns,
         {
-          columnId: prev.kanbanColumns.length + 1,
+          columnId: uuidv4(),
           title: '무제',
           cards: [],
         },
@@ -195,7 +193,7 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const onChangeTagName = (value: string, columnId: number, cardId: number) => {
+  const onChangeTagName = (value: string, columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -211,7 +209,7 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const onClickAddTag = (columnId: number, cardId: number) => {
+  const onClickAddTag = (columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -227,7 +225,7 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const onClickDeleteItem = (columnId: number, cardId: number) => {
+  const onClickDeleteItem = (columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -241,14 +239,14 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const onClickDeleteColumn = (columnId: number) => {
+  const onClickDeleteColumn = (columnId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.filter((column) => column.columnId !== columnId),
     }));
   };
 
-  const handleDragStart = (e: DragEvent, sourcecolumnId: number, cardId: number) => {
+  const handleDragStart = (e: DragEvent, sourcecolumnId: string, cardId: string) => {
     setDraggedItem({ sourcecolumnId, cardId });
     e.currentTarget.classList.add('dragging');
   };
@@ -261,7 +259,7 @@ const LegacyKanbanList = () => {
     });
   };
 
-  const handleDragOver = (e: DragEvent, columnId: number) => {
+  const handleDragOver = (e: DragEvent, columnId: string) => {
     e.preventDefault();
     if (draggedItem && draggedItem.sourcecolumnId !== columnId) {
       e.currentTarget.classList.add('drop-target');
@@ -272,7 +270,7 @@ const LegacyKanbanList = () => {
     e.currentTarget.classList.remove('drop-target');
   };
 
-  const handleDrop = (e: DragEvent, targetcolumnId: number) => {
+  const handleDrop = (e: DragEvent, targetcolumnId: string) => {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-target');
 
@@ -339,7 +337,7 @@ const LegacyKanbanList = () => {
               {column.cards.length !== 0 && (
                 <Button onClick={() => onClickAddCard(column.columnId)} icon={<PlusIcon />} aria-label='카드 추가' />
               )}
-              {column.cards.length === 0 && column.columnId > 3 && (
+              {column.cards.length === 0 && !column.indelible && (
                 <Button
                   onClick={() => onClickDeleteColumn(column.columnId)}
                   icon={<XIcon width={16} />}

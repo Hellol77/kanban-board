@@ -2,6 +2,7 @@ import { Button } from '@/components/common';
 import { KanbanActionsContext } from '@/components/KanbanBoard/KanbanContext';
 import { useContext } from 'react';
 import PlusIcon from '@/assets/plus.svg?react';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddColumnButton = () => {
   const { setData } = useContext(KanbanActionsContext);
@@ -11,7 +12,7 @@ const AddColumnButton = () => {
       kanbanColumns: [
         ...prev.kanbanColumns,
         {
-          columnId: prev.kanbanColumns.length + 1,
+          columnId: uuidv4(),
           title: '무제',
           cards: [],
         },

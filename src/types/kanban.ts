@@ -6,14 +6,14 @@ export interface KanbanDataType {
 }
 
 export interface KanbanColumnType {
-  columnId: number;
+  columnId: string;
   title: string;
   cards: CardType[];
   indelible?: boolean;
 }
 
 export interface CardType {
-  id: number;
+  id: string;
   tag?: TagType;
   description?: string;
 }
@@ -24,6 +24,6 @@ export interface TagType {
 }
 
 export interface DraggedItemType {
-  sourcecolumnId: number;
-  cardId: number;
+  sourcecolumnId: string;
+  cardId: string;
 }

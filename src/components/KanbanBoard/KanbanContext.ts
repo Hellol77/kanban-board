@@ -9,7 +9,7 @@ export const KanbanDataContext = createContext<{
 
 export const KanbanActionsContext = createContext<{
   setData: Dispatch<SetStateAction<KanbanDataType>>;
-  setDraggedItem: Dispatch<SetStateAction<{ sourcecolumnId: number; cardId: number } | null>>;
+  setDraggedItem: Dispatch<SetStateAction<DraggedItemType | null>>;
 }>({
   setData: () => {},
   setDraggedItem: () => {},

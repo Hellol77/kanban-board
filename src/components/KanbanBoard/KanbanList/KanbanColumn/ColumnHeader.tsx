@@ -4,6 +4,7 @@ import PlusIcon from '@/assets/plus.svg?react';
 import XIcon from '@/assets/x.svg?react';
 import { KanbanDataType, KanbanColumnType } from '@/types/kanban';
 import { Dispatch, SetStateAction } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ColumnHeaderProps {
   column: KanbanColumnType;
@@ -26,14 +27,14 @@ const S = {
 };
 
 const ColumnHeader = ({ column, setData }: ColumnHeaderProps) => {
-  const onClickDeleteColumn = (columnId: number) => {
+  const onClickDeleteColumn = (columnId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.filter((column) => column.columnId !== columnId),
     }));
   };
 
-  const onChangeColumnTitle = (value: string, id: number) => {
+  const onChangeColumnTitle = (value: string, id: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -42,7 +43,7 @@ const ColumnHeader = ({ column, setData }: ColumnHeaderProps) => {
     }));
   };
 
-  const onClickAddCard = (columnId: number) => {
+  const onClickAddCard = (columnId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -52,7 +53,7 @@ const ColumnHeader = ({ column, setData }: ColumnHeaderProps) => {
               cards: [
                 ...column.cards,
                 {
-                  id: column.cards.length + 1,
+                  id: uuidv4(),
                   tag: { tagName: '무제', color: 'black' },
                   description: '',
                 },

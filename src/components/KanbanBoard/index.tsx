@@ -3,7 +3,7 @@ import { KanbanActionsContext, KanbanDataContext } from '@/components/KanbanBoar
 import KanbanHeader from '@/components/KanbanBoard/KanbanHeader/KanbanHeader';
 import KanbanList from '@/components/KanbanBoard/KanbanList';
 import INITIAL_DATA from '@/data/initialData';
-import { KanbanDataType } from '@/types/kanban';
+import { DraggedItemType, KanbanDataType } from '@/types/kanban';
 import { useState, useEffect, useMemo } from 'react';
 
 const KanbanBoard = () => {
@@ -11,10 +11,7 @@ const KanbanBoard = () => {
     const localData = localStorage.getItem('kanban');
     return localData ? JSON.parse(localData) : INITIAL_DATA;
   });
-  const [draggedItem, setDraggedItem] = useState<{
-    sourcecolumnId: number;
-    cardId: number;
-  } | null>(null);
+  const [draggedItem, setDraggedItem] = useState<DraggedItemType | null>(null);
 
   useEffect(() => {
     localStorage.setItem('kanban', JSON.stringify(data));

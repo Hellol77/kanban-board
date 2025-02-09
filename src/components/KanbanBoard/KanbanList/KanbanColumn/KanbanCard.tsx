@@ -10,7 +10,7 @@ import useClickOutSide from '@/hooks/useClickOutside';
 import { TAG_COLORS } from '@/constants/color';
 import { TagColorType } from '@/types/color';
 interface KanbanCardProps {
-  columnId: number;
+  columnId: string;
   card: CardType;
 }
 
@@ -86,7 +86,7 @@ const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const settingModalRef = useRef<HTMLDivElement>(null);
   useClickOutSide(settingModalRef, () => setIsSettingOpen(false));
-  const handleDragStart = (e: DragEvent, sourcecolumnId: number, cardId: number) => {
+  const handleDragStart = (e: DragEvent, sourcecolumnId: string, cardId: string) => {
     setDraggedItem({ sourcecolumnId, cardId });
     e.currentTarget.classList.add('dragging');
   };
@@ -99,7 +99,7 @@ const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
     });
   };
 
-  const onClickDeleteItem = (columnId: number, cardId: number) => {
+  const onClickDeleteItem = (columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -113,7 +113,7 @@ const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
     }));
   };
 
-  const onClickAddTag = (columnId: number, cardId: number) => {
+  const onClickAddTag = (columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -129,7 +129,7 @@ const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
     }));
   };
 
-  const onChangeTagName = (value: string, columnId: number, cardId: number) => {
+  const onChangeTagName = (value: string, columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -145,7 +145,7 @@ const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
     }));
   };
 
-  const onChangeCardDescription = (value: string, columnId: number, cardId: number) => {
+  const onChangeCardDescription = (value: string, columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -159,7 +159,7 @@ const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
     }));
   };
 
-  const onClickTagColor = (color: TagColorType, columnId: number, cardId: number) => {
+  const onClickTagColor = (color: TagColorType, columnId: string, cardId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>

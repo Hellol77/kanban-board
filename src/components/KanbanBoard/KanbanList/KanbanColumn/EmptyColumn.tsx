@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import PlusIcon from '@/assets/plus.svg?react';
 import { useContext } from 'react';
 import { KanbanActionsContext } from '@/components/KanbanBoard/KanbanContext';
+import { v4 as uuidv4 } from 'uuid';
 
 interface EmptyColumnProps {
-  columnId: number;
+  columnId: string;
 }
 
 const S = {
@@ -27,7 +28,7 @@ const S = {
 const EmptyColumn = ({ columnId }: EmptyColumnProps) => {
   const { setData } = useContext(KanbanActionsContext);
 
-  const onClickAddCard = (columnId: number) => {
+  const onClickAddCard = (columnId: string) => {
     setData((prev) => ({
       ...prev,
       kanbanColumns: prev.kanbanColumns.map((column) =>
@@ -37,7 +38,7 @@ const EmptyColumn = ({ columnId }: EmptyColumnProps) => {
               cards: [
                 ...column.cards,
                 {
-                  id: column.cards.length + 1,
+                  id: uuidv4(),
                   tag: { tagName: '무제', color: 'black' },
                   description: '',
                 },

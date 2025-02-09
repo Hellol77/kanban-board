@@ -29,7 +29,7 @@ const S = {
 const KanbanColumn = ({ column }: KanbanColumnProps) => {
   const { setData } = useContext(KanbanActionsContext);
   const { draggedItem } = useContext(KanbanDataContext);
-  const handleDragOver = (e: DragEvent, columnId: number) => {
+  const handleDragOver = (e: DragEvent, columnId: string) => {
     e.preventDefault();
     if (draggedItem && draggedItem.sourcecolumnId !== columnId) {
       e.currentTarget.classList.add('drop-target');
@@ -40,7 +40,7 @@ const KanbanColumn = ({ column }: KanbanColumnProps) => {
     e.currentTarget.classList.remove('drop-target');
   };
 
-  const handleDrop = (e: DragEvent, targetcolumnId: number) => {
+  const handleDrop = (e: DragEvent, targetcolumnId: string) => {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-target');
 
