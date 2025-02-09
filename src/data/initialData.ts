@@ -2,19 +2,19 @@ import { KanbanDataType } from '@/types/kanban';
 
 const INITIAL_DATA: KanbanDataType = {
   projectName: 'Project No.1',
-  kanbanList: [
+  kanbanColumns: [
     {
-      listId: 1,
+      columnId: 1,
       title: '시작 전',
       cards: [],
     },
     {
-      listId: 2,
+      columnId: 2,
       title: '진행 중',
       cards: [],
     },
     {
-      listId: 3,
+      columnId: 3,
       title: '완료',
       cards: [],
     },

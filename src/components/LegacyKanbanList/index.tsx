@@ -122,13 +122,13 @@ const S = {
   `,
 };
 
-const KanbanList = () => {
+const LegacyKanbanList = () => {
   const [data, setData] = useState<KanbanDataType>(() => {
     const localData = localStorage.getItem('kanban');
     return localData ? JSON.parse(localData) : INITIAL_DATA;
   });
   const [draggedItem, setDraggedItem] = useState<{
-    sourceListId: number;
+    sourcecolumnId: number;
     cardId: number;
   } | null>(null);
   useEffect(() => {
@@ -137,117 +137,119 @@ const KanbanList = () => {
 
   const onChangeProjectName = (value: string) => setData((prev) => ({ ...prev, projectName: value }));
 
-  const onChangeListTitle = (value: string, id: number) => {
+  const onChangeColumnTitle = (value: string, id: number) => {
     setData((prev) => ({
       ...prev,
-      kanbanList: prev.kanbanList.map((list) => (list.listId === id ? { ...list, title: value } : list)),
-    }));
-  };
-
-  const onChangeCardDescription = (value: string, listId: number, cardId: number) => {
-    setData((prev) => ({
-      ...prev,
-      kanbanList: prev.kanbanList.map((list) =>
-        list.listId === listId
-          ? {
-              ...list,
-              cards: list.cards.map((card) => (card.id === cardId ? { ...card, description: value } : card)),
-            }
-          : list,
+      kanbanColumns: prev.kanbanColumns.map((column) =>
+        column.columnId === id ? { ...column, title: value } : column,
       ),
     }));
   };
 
-  const onClickAddCard = (listId: number) => {
+  const onChangeCardDescription = (value: string, columnId: number, cardId: number) => {
     setData((prev) => ({
       ...prev,
-      kanbanList: prev.kanbanList.map((list) =>
-        list.listId === listId
+      kanbanColumns: prev.kanbanColumns.map((column) =>
+        column.columnId === columnId
           ? {
-              ...list,
+              ...column,
+              cards: column.cards.map((card) => (card.id === cardId ? { ...card, description: value } : card)),
+            }
+          : column,
+      ),
+    }));
+  };
+
+  const onClickAddCard = (columnId: number) => {
+    setData((prev) => ({
+      ...prev,
+      kanbanColumns: prev.kanbanColumns.map((column) =>
+        column.columnId === columnId
+          ? {
+              ...column,
               cards: [
-                ...list.cards,
+                ...column.cards,
                 {
-                  id: list.cards.length + 1,
+                  id: column.cards.length + 1,
                   tag: { tagName: '무제', color: 'black' },
                   description: '',
                 },
               ],
             }
-          : list,
+          : column,
       ),
     }));
   };
 
-  const onClickAddList = () => {
+  const onClickAddColumn = () => {
     setData((prev) => ({
       ...prev,
-      kanbanList: [
-        ...prev.kanbanList,
+      kanbanColumns: [
+        ...prev.kanbanColumns,
         {
-          listId: prev.kanbanList.length + 1,
-          title: 'list',
+          columnId: prev.kanbanColumns.length + 1,
+          title: '무제',
           cards: [],
         },
       ],
     }));
   };
 
-  const onChangeTagName = (value: string, listId: number, cardId: number) => {
+  const onChangeTagName = (value: string, columnId: number, cardId: number) => {
     setData((prev) => ({
       ...prev,
-      kanbanList: prev.kanbanList.map((list) =>
-        list.listId === listId
+      kanbanColumns: prev.kanbanColumns.map((column) =>
+        column.columnId === columnId
           ? {
-              ...list,
-              cards: list.cards.map((card) =>
+              ...column,
+              cards: column.cards.map((card) =>
                 card.id === cardId ? { ...card, tag: { tagName: value, color: 'black' } } : card,
               ),
             }
-          : list,
+          : column,
       ),
     }));
   };
 
-  const onClickAddTag = (listId: number, cardId: number) => {
+  const onClickAddTag = (columnId: number, cardId: number) => {
     setData((prev) => ({
       ...prev,
-      kanbanList: prev.kanbanList.map((list) =>
-        list.listId === listId
+      kanbanColumns: prev.kanbanColumns.map((column) =>
+        column.columnId === columnId
           ? {
-              ...list,
-              cards: list.cards.map((card) =>
+              ...column,
+              cards: column.cards.map((card) =>
                 card.id === cardId ? { ...card, tag: { tagName: '무제', color: 'black' } } : card,
               ),
             }
-          : list,
+          : column,
       ),
     }));
   };
 
-  const onClickDeleteItem = (listId: number, cardId: number) => {
+  const onClickDeleteItem = (columnId: number, cardId: number) => {
     setData((prev) => ({
       ...prev,
-      kanbanList: prev.kanbanList.map((list) =>
-        list.listId === listId
+      kanbanColumns: prev.kanbanColumns.map((column) =>
+        column.columnId === columnId
           ? {
-              ...list,
-              cards: list.cards.filter((card) => card.id !== cardId),
+              ...column,
+              cards: column.cards.filter((card) => card.id !== cardId),
             }
-          : list,
+          : column,
       ),
     }));
   };
 
-  const onClickDeleteListColumn = (listId: number) => {
+  const onClickDeleteColumn = (columnId: number) => {
     setData((prev) => ({
       ...prev,
-      kanbanList: prev.kanbanList.filter((list) => list.listId !== listId),
+      kanbanColumns: prev.kanbanColumns.filter((column) => column.columnId !== columnId),
     }));
   };
 
-  const handleDragStart = (e: DragEvent, sourceListId: number, cardId: number) => {
-    setDraggedItem({ sourceListId, cardId });
+  const handleDragStart = (e: DragEvent, sourcecolumnId: number, cardId: number) => {
+    setDraggedItem({ sourcecolumnId, cardId });
     e.currentTarget.classList.add('dragging');
   };
 
@@ -259,9 +261,9 @@ const KanbanList = () => {
     });
   };
 
-  const handleDragOver = (e: DragEvent, listId: number) => {
+  const handleDragOver = (e: DragEvent, columnId: number) => {
     e.preventDefault();
-    if (draggedItem && draggedItem.sourceListId !== listId) {
+    if (draggedItem && draggedItem.sourcecolumnId !== columnId) {
       e.currentTarget.classList.add('drop-target');
     }
   };
@@ -270,28 +272,28 @@ const KanbanList = () => {
     e.currentTarget.classList.remove('drop-target');
   };
 
-  const handleDrop = (e: DragEvent, targetListId: number) => {
+  const handleDrop = (e: DragEvent, targetcolumnId: number) => {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-target');
 
-    if (!draggedItem || draggedItem.sourceListId === targetListId) return;
+    if (!draggedItem || draggedItem.sourcecolumnId === targetcolumnId) return;
 
     setData((prev) => {
-      const sourceList = prev.kanbanList.find((list) => list.listId === draggedItem.sourceListId);
+      const sourceList = prev.kanbanColumns.find((list) => list.columnId === draggedItem.sourcecolumnId);
       const cardToMove = sourceList?.cards.find((card) => card.id === draggedItem.cardId);
 
       if (!sourceList || !cardToMove) return prev;
 
       return {
         ...prev,
-        kanbanList: prev.kanbanList.map((list) => {
-          if (list.listId === draggedItem.sourceListId) {
+        kanbanColumns: prev.kanbanColumns.map((list) => {
+          if (list.columnId === draggedItem.sourcecolumnId) {
             return {
               ...list,
               cards: list.cards.filter((card) => card.id !== draggedItem.cardId),
             };
           }
-          if (list.listId === targetListId) {
+          if (list.columnId === targetcolumnId) {
             return {
               ...list,
               cards: [...list.cards, cardToMove],
@@ -314,12 +316,12 @@ const KanbanList = () => {
         onChange={(e) => onChangeProjectName(e.target.value)}
       />
       <S.ListWrapper>
-        {data.kanbanList.map((list) => (
+        {data.kanbanColumns.map((column) => (
           <S.ListColumn
-            key={list.listId}
-            onDragOver={(e) => handleDragOver(e, list.listId)}
+            key={column.columnId}
+            onDragOver={(e) => handleDragOver(e, column.columnId)}
             onDragLeave={handleDragLeave}
-            onDrop={(e) => handleDrop(e, list.listId)}
+            onDrop={(e) => handleDrop(e, column.columnId)}
           >
             <S.ListTitle>
               <S.ListTitleWrapper>
@@ -328,62 +330,62 @@ const KanbanList = () => {
                   role='heading'
                   aria-label='컬럼 제목'
                   aria-level={2}
-                  value={list.title}
+                  value={column.title}
                   placeholder='무제'
-                  onChange={(e) => onChangeListTitle(e.target.value, list.listId)}
+                  onChange={(e) => onChangeColumnTitle(e.target.value, column.columnId)}
                 />
-                {list.cards.length !== 0 && <Badge count={list.cards.length} />}
+                {column.cards.length !== 0 && <Badge count={column.cards.length} />}
               </S.ListTitleWrapper>
-              {list.cards.length !== 0 && (
-                <Button onClick={() => onClickAddCard(list.listId)} icon={<PlusIcon />} aria-label='카드 추가' />
+              {column.cards.length !== 0 && (
+                <Button onClick={() => onClickAddCard(column.columnId)} icon={<PlusIcon />} aria-label='카드 추가' />
               )}
-              {list.cards.length === 0 && list.listId > 3 && (
+              {column.cards.length === 0 && column.columnId > 3 && (
                 <Button
-                  onClick={() => onClickDeleteListColumn(list.listId)}
+                  onClick={() => onClickDeleteColumn(column.columnId)}
                   icon={<XIcon width={16} />}
                   aria-label='컬럼 삭제'
                 />
               )}
             </S.ListTitle>
-            {list.cards.length === 0 && (
+            {column.cards.length === 0 && (
               <S.ListEmptyItem>
                 <Text color='gray' variant='sub'>
                   지금 바로 추가해보세요.
                 </Text>
-                <Button onClick={() => onClickAddCard(list.listId)} icon={<PlusIcon />} aria-label='카드 추가' />
+                <Button onClick={() => onClickAddCard(column.columnId)} icon={<PlusIcon />} aria-label='카드 추가' />
               </S.ListEmptyItem>
             )}
-            {list.cards.map((card) => (
+            {column.cards.map((card) => (
               <S.ListItem
                 key={card.id}
                 draggable
-                onDragStart={(e) => handleDragStart(e, list.listId, card.id)}
+                onDragStart={(e) => handleDragStart(e, column.columnId, card.id)}
                 onDragEnd={handleDragEnd}
               >
                 <S.XIcon
                   aria-label='카드 삭제'
                   width={14}
                   height={14}
-                  onClick={() => onClickDeleteItem(list.listId, card.id)}
+                  onClick={() => onClickDeleteItem(column.columnId, card.id)}
                 />
                 {!card.tag?.tagName && (
                   <S.TagPlusIcon
                     aria-label='태그 추가'
                     width={16}
                     height={16}
-                    onClick={() => onClickAddTag(list.listId, card.id)}
+                    onClick={() => onClickAddTag(column.columnId, card.id)}
                   />
                 )}
                 {card.tag?.tagName && (
                   <TagInput
                     value={card.tag.tagName}
-                    onChange={(e) => onChangeTagName(e.target.value, list.listId, card.id)}
+                    onChange={(e) => onChangeTagName(e.target.value, column.columnId, card.id)}
                   />
                 )}
                 <TextAreaInput
                   placeholder='카드 설명을 입력해주세요.'
                   value={card?.description || ''}
-                  onChange={(e) => onChangeCardDescription(e.target.value, list.listId, card.id)}
+                  onChange={(e) => onChangeCardDescription(e.target.value, column.columnId, card.id)}
                 >
                   {card.description}
                 </TextAreaInput>
@@ -392,11 +394,16 @@ const KanbanList = () => {
           </S.ListColumn>
         ))}
         <S.AddListWrapper>
-          <Button onClick={() => onClickAddList()} icon={<PlusIcon />} aria-label='칼럼 추가' text='Add another list' />
+          <Button
+            onClick={() => onClickAddColumn()}
+            icon={<PlusIcon />}
+            aria-label='칼럼 추가'
+            text='Add another list'
+          />
         </S.AddListWrapper>
       </S.ListWrapper>
     </KanbanWrapper>
   );
 };
 
-export default KanbanList;
+export default LegacyKanbanList;

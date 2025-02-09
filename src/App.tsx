@@ -3,7 +3,7 @@ import Logo from '@/assets/btheegg.svg?react';
 import { Dropdown, ContentWrapper, Text, PageLayout } from '@/components/common';
 import ProfileIcon from '@/assets/avatar.svg?react';
 import ArrowDownIcon from '@/assets/arrowDown.svg?react';
-import KanbanList from '@/components/KanbanList/KanbanList';
+import KanbanBoard from '@/components/KanbanBoard';
 function App() {
   return (
     <>
@@ -27,7 +27,7 @@ function App() {
           }
         />
         <ContentWrapper>
-          <KanbanList />
+          <KanbanBoard />
         </ContentWrapper>
       </PageLayout>
     </>
