@@ -29,7 +29,7 @@ const TextAreaInput = ({ value, ...props }: TextAreaInputProps) => {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // 입력된 내용에 따라 높이 증가
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [value]);
 
