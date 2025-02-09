@@ -1,6 +1,6 @@
 import { Badge, Button, KanbanWrapper, TagInput, Text, TextAreaInput, TextInput } from '@/components/common';
 import { KanbanDataType } from '@/types/kanban';
-import { useEffect, useState } from 'react';
+import { DragEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PlusIcon from '@/assets/plus.svg?react';
 import XIcon from '@/assets/x.svg?react';
@@ -10,7 +10,7 @@ const S = {
   ListWrapper: styled.div`
     display: flex;
     overflow-x: auto;
-    height: 100%;
+    height: 100vh;
     gap: 16px;
     width: 100%;
     max-width: calc(200px * 4 + 16px * 3);
@@ -25,6 +25,9 @@ const S = {
     border-radius: 8px;
     height: 100%;
     overflow-y: auto;
+    &.drop-target {
+      background-color: ${({ theme }) => theme.colors.white[300]};
+    }
   `,
 
   ListTitle: styled.div`
@@ -48,6 +51,13 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.white[300]};
+    }
+    &.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
   `,
 
   ListItemTag: styled.div`
@@ -143,9 +153,12 @@ const initialData: KanbanDataType = {
 const KanbanList = () => {
   const [data, setData] = useState<KanbanDataType>(() => {
     const localData = localStorage.getItem('kanban');
-    return localData ? initialData : initialData;
+    return localData ? JSON.parse(localData) : initialData;
   });
-
+  const [draggedItem, setDraggedItem] = useState<{
+    sourceListId: number;
+    cardId: number;
+  } | null>(null);
   useEffect(() => {
     localStorage.setItem('kanban', JSON.stringify(data));
   }, [data]);
@@ -261,6 +274,62 @@ const KanbanList = () => {
     }));
   };
 
+  const handleDragStart = (e: DragEvent, sourceListId: number, cardId: number) => {
+    setDraggedItem({ sourceListId, cardId });
+    e.currentTarget.classList.add('dragging');
+  };
+
+  const handleDragEnd = (e: DragEvent) => {
+    e.currentTarget.classList.remove('dragging');
+    setDraggedItem(null);
+    document.querySelectorAll('.drop-target').forEach((el) => {
+      el.classList.remove('drop-target');
+    });
+  };
+
+  const handleDragOver = (e: DragEvent, listId: number) => {
+    e.preventDefault();
+    if (draggedItem && draggedItem.sourceListId !== listId) {
+      e.currentTarget.classList.add('drop-target');
+    }
+  };
+
+  const handleDragLeave = (e: DragEvent) => {
+    e.currentTarget.classList.remove('drop-target');
+  };
+
+  const handleDrop = (e: DragEvent, targetListId: number) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drop-target');
+
+    if (!draggedItem || draggedItem.sourceListId === targetListId) return;
+
+    setData((prev) => {
+      const sourceList = prev.kanbanList.find((list) => list.listId === draggedItem.sourceListId);
+      const cardToMove = sourceList?.cards.find((card) => card.id === draggedItem.cardId);
+
+      if (!sourceList || !cardToMove) return prev;
+
+      return {
+        ...prev,
+        kanbanList: prev.kanbanList.map((list) => {
+          if (list.listId === draggedItem.sourceListId) {
+            return {
+              ...list,
+              cards: list.cards.filter((card) => card.id !== draggedItem.cardId),
+            };
+          }
+          if (list.listId === targetListId) {
+            return {
+              ...list,
+              cards: [...list.cards, cardToMove],
+            };
+          }
+          return list;
+        }),
+      };
+    });
+  };
   return (
     <KanbanWrapper>
       <TextInput
@@ -274,7 +343,12 @@ const KanbanList = () => {
       />
       <S.ListWrapper>
         {data.kanbanList.map((list) => (
-          <S.ListColumn key={list.listId}>
+          <S.ListColumn
+            key={list.listId}
+            onDragOver={(e) => handleDragOver(e, list.listId)}
+            onDragLeave={handleDragLeave}
+            onDrop={(e) => handleDrop(e, list.listId)}
+          >
             <S.ListTitle>
               <S.ListTitleWrapper>
                 <TextInput
@@ -308,7 +382,12 @@ const KanbanList = () => {
               </S.ListEmptyItem>
             )}
             {list.cards.map((card) => (
-              <S.ListItem key={card.id}>
+              <S.ListItem
+                key={card.id}
+                draggable
+                onDragStart={(e) => handleDragStart(e, list.listId, card.id)}
+                onDragEnd={handleDragEnd}
+              >
                 <S.XIcon width={14} height={14} onClick={() => onClickDeleteItem(list.listId, card.id)} />
                 {!card.tag?.tagName && (
                   <S.TagPlusIcon width={16} height={16} onClick={() => onClickAddTag(list.listId, card.id)} />
