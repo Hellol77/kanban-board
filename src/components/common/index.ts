@@ -5,3 +5,6 @@ export { default as KanbanWrapper } from './Wrapper/KanbanWrapper';
 export { default as Text } from './Text/Text';
 export { default as PageLayout } from './layout/PageLayout';
 export { default as Button } from './Button/Button';
+export { default as TextAreaInput } from './Input/TextAreaInput';
+export { default as Badge } from './Badge/Badge';
+export { default as TagInput } from './Input/TagInput';

@@ -34,7 +34,6 @@ ol {
 }
 
 body {
-  min-height: 100vh;
   line-height: 1.5;
   margin: 0;
 }
@@ -75,9 +74,6 @@ select {
   font: inherit;
 }
 
-textarea:not([rows]) {
-  min-height: 10em;
-}
 
 :target {
   scroll-margin-block: 5ex;
