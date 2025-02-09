@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import PlusIcon from '@/assets/plus.svg?react';
 import XIcon from '@/assets/x.svg?react';
 import TagPlusIcon from '@/assets/tagPlus.svg?react';
+import INITIAL_DATA from '@/data/initialData';
 
 const S = {
   ListWrapper: styled.div`
@@ -121,39 +122,10 @@ const S = {
   `,
 };
 
-const initialData: KanbanDataType = {
-  projectName: 'Project No.1',
-  kanbanList: [
-    {
-      listId: 1,
-      title: '시작 전',
-      cards: [
-        {
-          id: 1,
-          tag: { tagName: 'tag1', color: 'black' },
-          description: '안녕하세요ㅕㅇ창ㄴㅊㅇ너 안그애라얼',
-        },
-        { id: 2, tag: { tagName: 'tag1', color: 'black' }, description: 'description2' },
-        { id: 3, tag: { tagName: 'tag1', color: 'black' }, description: 'description3' },
-      ],
-    },
-    {
-      listId: 2,
-      title: '진행 중',
-      cards: [],
-    },
-    {
-      listId: 3,
-      title: '완료',
-      cards: [],
-    },
-  ],
-};
-
 const KanbanList = () => {
   const [data, setData] = useState<KanbanDataType>(() => {
     const localData = localStorage.getItem('kanban');
-    return localData ? JSON.parse(localData) : initialData;
+    return localData ? JSON.parse(localData) : INITIAL_DATA;
   });
   const [draggedItem, setDraggedItem] = useState<{
     sourceListId: number;

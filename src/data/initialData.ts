@@ -1,20 +1,12 @@
 import { KanbanDataType } from '@/types/kanban';
 
-const initialData: KanbanDataType = {
+const INITIAL_DATA: KanbanDataType = {
   projectName: 'Project No.1',
   kanbanList: [
     {
       listId: 1,
       title: '시작 전',
-      cards: [
-        {
-          id: 1,
-          tag: { tagName: 'tag1', color: 'black' },
-          description: '안녕하세요ㅕㅇ창ㄴㅊㅇ너 안그애라얼',
-        },
-        { id: 2, tag: { tagName: 'tag1', color: 'black' }, description: 'description2' },
-        { id: 3, tag: { tagName: 'tag1', color: 'black' }, description: 'description3' },
-      ],
+      cards: [],
     },
     {
       listId: 2,
@@ -29,4 +21,4 @@ const initialData: KanbanDataType = {
   ],
 };
 
-export default initialData;
+export default INITIAL_DATA;
