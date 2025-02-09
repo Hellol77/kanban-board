@@ -246,8 +246,8 @@ const LegacyKanbanList = () => {
     }));
   };
 
-  const handleDragStart = (e: DragEvent, sourcecolumnId: string, cardId: string) => {
-    setDraggedItem({ sourcecolumnId, cardId });
+  const handleDragStart = (e: DragEvent, sourceColumnId: string, cardId: string) => {
+    setDraggedItem({ sourceColumnId, cardId });
     e.currentTarget.classList.add('dragging');
   };
 
@@ -261,7 +261,7 @@ const LegacyKanbanList = () => {
 
   const handleDragOver = (e: DragEvent, columnId: string) => {
     e.preventDefault();
-    if (draggedItem && draggedItem.sourcecolumnId !== columnId) {
+    if (draggedItem && draggedItem.sourceColumnId !== columnId) {
       e.currentTarget.classList.add('drop-target');
     }
   };
@@ -274,10 +274,10 @@ const LegacyKanbanList = () => {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-target');
 
-    if (!draggedItem || draggedItem.sourcecolumnId === targetcolumnId) return;
+    if (!draggedItem || draggedItem.sourceColumnId === targetcolumnId) return;
 
     setData((prev) => {
-      const sourceList = prev.kanbanColumns.find((list) => list.columnId === draggedItem.sourcecolumnId);
+      const sourceList = prev.kanbanColumns.find((list) => list.columnId === draggedItem.sourceColumnId);
       const cardToMove = sourceList?.cards.find((card) => card.id === draggedItem.cardId);
 
       if (!sourceList || !cardToMove) return prev;
@@ -285,7 +285,7 @@ const LegacyKanbanList = () => {
       return {
         ...prev,
         kanbanColumns: prev.kanbanColumns.map((list) => {
-          if (list.columnId === draggedItem.sourcecolumnId) {
+          if (list.columnId === draggedItem.sourceColumnId) {
             return {
               ...list,
               cards: list.cards.filter((card) => card.id !== draggedItem.cardId),

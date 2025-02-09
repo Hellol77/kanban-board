@@ -24,6 +24,7 @@ export interface TagType {
 }
 
 export interface DraggedItemType {
-  sourcecolumnId: string;
+  sourceColumnId: string;
   cardId: string;
+  sourceIndex: number;
 }

@@ -1,6 +1,6 @@
 import ColumnHeader from '@/components/KanbanBoard/KanbanList/KanbanColumn/ColumnHeader';
 import { KanbanColumnType } from '@/types/kanban';
-import { DragEvent, useContext } from 'react';
+import { DragEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import EmptyColumn from '@/components/KanbanBoard/KanbanList/KanbanColumn/EmptyColumn';
 import KanbanCard from '@/components/KanbanBoard/KanbanList/KanbanColumn/KanbanCard';
@@ -29,59 +29,53 @@ const S = {
 const KanbanColumn = ({ column }: KanbanColumnProps) => {
   const { setData } = useContext(KanbanActionsContext);
   const { draggedItem } = useContext(KanbanDataContext);
-  const handleDragOver = (e: DragEvent, columnId: string) => {
+  const columnRef = useRef<HTMLElement>(null);
+
+  const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
-    if (draggedItem && draggedItem.sourcecolumnId !== columnId) {
-      e.currentTarget.classList.add('drop-target');
+    if (!draggedItem || !columnRef.current) return;
+
+    if (column.cards.length === 0) {
+      columnRef.current.classList.add('drop-target');
     }
   };
 
-  const handleDragLeave = (e: DragEvent) => {
-    e.currentTarget.classList.remove('drop-target');
+  const handleDragLeave = () => {
+    if (!columnRef.current) return;
+    columnRef.current.classList.remove('drop-target');
   };
 
-  const handleDrop = (e: DragEvent, targetcolumnId: string) => {
+  const handleDrop = (e: DragEvent) => {
     e.preventDefault();
-    e.currentTarget.classList.remove('drop-target');
+    if (!draggedItem || !columnRef.current) return;
 
-    if (!draggedItem || draggedItem.sourcecolumnId === targetcolumnId) return;
+    if (column.cards.length === 0) {
+      setData((prev) => {
+        const newData = { ...prev };
+        const sourceColumn = newData.kanbanColumns.find((col) => col.columnId === draggedItem.sourceColumnId);
+        const targetColumn = newData.kanbanColumns.find((col) => col.columnId === column.columnId);
 
-    setData((prev) => {
-      const sourceList = prev.kanbanColumns.find((list) => list.columnId === draggedItem.sourcecolumnId);
-      const cardToMove = sourceList?.cards.find((card) => card.id === draggedItem.cardId);
+        if (!sourceColumn || !targetColumn) return prev;
 
-      if (!sourceList || !cardToMove) return prev;
+        const draggedCard = sourceColumn.cards.find((card) => card.id === draggedItem.cardId);
+        if (!draggedCard) return prev;
 
-      return {
-        ...prev,
-        kanbanColumns: prev.kanbanColumns.map((list) => {
-          if (list.columnId === draggedItem.sourcecolumnId) {
-            return {
-              ...list,
-              cards: list.cards.filter((card) => card.id !== draggedItem.cardId),
-            };
-          }
-          if (list.columnId === targetcolumnId) {
-            return {
-              ...list,
-              cards: [...list.cards, cardToMove],
-            };
-          }
-          return list;
-        }),
-      };
-    });
+        sourceColumn.cards = sourceColumn.cards.filter((card) => card.id !== draggedItem.cardId);
+
+        targetColumn.cards.push(draggedCard);
+
+        return newData;
+      });
+    }
+
+    columnRef.current.classList.remove('drop-target');
   };
   return (
-    <S.ListColumn
-      onDragOver={(e) => handleDragOver(e, column.columnId)}
-      onDragLeave={handleDragLeave}
-      onDrop={(e) => handleDrop(e, column.columnId)}
-    >
+    <S.ListColumn ref={columnRef} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
       <ColumnHeader column={column} setData={setData} />
       {column.cards.length === 0 && <EmptyColumn columnId={column.columnId} />}
-      {column.cards.map((card) => (
-        <KanbanCard key={card.id} card={card} columnId={column.columnId} />
+      {column.cards.map((card, index) => (
+        <KanbanCard key={card.id} card={card} columnId={column.columnId} index={index} />
       ))}
     </S.ListColumn>
   );
