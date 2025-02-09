@@ -8,3 +8,4 @@ export { default as Button } from './Button/Button';
 export { default as TextAreaInput } from './Input/TextAreaInput';
 export { default as Badge } from './Badge/Badge';
 export { default as TagInput } from './Input/TagInput';
+export { default as Circle } from './Circle/Circle';

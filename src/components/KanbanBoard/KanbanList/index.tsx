@@ -1,3 +1,4 @@
+import AddColumnButton from '@/components/KanbanBoard/KanbanList/AddColumnButton';
 import KanbanColumn from '@/components/KanbanBoard/KanbanList/KanbanColumn';
 import { KanbanColumnType } from '@/types/kanban';
 import styled from 'styled-components';
@@ -23,6 +24,7 @@ const KanbanList = ({ columns }: KanbanListProps) => {
       {columns.map((column) => (
         <KanbanColumn key={column.columnId} column={column} />
       ))}
+      <AddColumnButton />
     </S.ListWrapper>
   );
 };

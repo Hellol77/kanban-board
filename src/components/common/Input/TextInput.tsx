@@ -29,7 +29,7 @@ const S = {
   Input: styled.input<VariantProps>`
     width: 100%;
     min-width: 7rem;
-    padding: 8px;
+    padding: 2px;
     color: ${({ theme }) => theme.colors.black[100]};
     border: none;
     border-radius: 0.8rem;

@@ -378,6 +378,7 @@ const LegacyKanbanList = () => {
                 )}
                 {card.tag?.tagName && (
                   <TagInput
+                    color={card.tag.color}
                     value={card.tag.tagName}
                     onChange={(e) => onChangeTagName(e.target.value, column.columnId, card.id)}
                   />

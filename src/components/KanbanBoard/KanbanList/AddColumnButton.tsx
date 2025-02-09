@@ -7,7 +7,6 @@ import PlusIcon from '@/assets/plus.svg?react';
 const S = {
   AddListWrapper: styled.div`
     flex-shrink: 0;
-    padding: 0.8rem 0;
   `,
 };
 

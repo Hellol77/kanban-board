@@ -1,3 +1,5 @@
+import { TagColorType } from '@/types/color';
+
 export interface KanbanDataType {
   projectName: string;
   kanbanColumns: KanbanColumnType[];
@@ -17,7 +19,7 @@ export interface CardType {
 
 export interface TagType {
   tagName: string;
-  color: 'black' | 'blue' | 'purple';
+  color: TagColorType;
 }
 
 export interface DraggedItemType {

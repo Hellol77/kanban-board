@@ -1,13 +1,31 @@
+import { TagColorType } from '@/types/color';
 import { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface TagInputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
+  color: TagColorType;
 }
 
 interface TagStyleProps {
   width: number;
+  color: TagColorType;
 }
+
+const colorMap = {
+  purple: css`
+    color: ${({ theme }) => theme.colors.purple[200]};
+    background-color: ${({ theme }) => theme.colors.purple[100]};
+  `,
+  black: css`
+    color: ${({ theme }) => theme.colors.black.text1};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
+  `,
+  blue: css`
+    color: ${({ theme }) => theme.colors.blue[200]};
+    background-color: ${({ theme }) => theme.colors.blue[100]};
+  `,
+};
 
 const S = {
   Container: styled.div`
@@ -30,6 +48,7 @@ const S = {
     background-color: transparent;
     text-align: center;
     min-width: 2rem;
+    ${({ color }) => colorMap[color] || colorMap.black}
   `,
   HiddenText: styled.span`
     font-size: ${({ theme }) => theme.fontSizes.body1};
