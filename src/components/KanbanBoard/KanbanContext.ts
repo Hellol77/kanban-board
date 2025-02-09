@@ -1,8 +1,16 @@
 import { DraggedItemType, KanbanDataType } from '@/types/kanban';
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-export const KanbanContext = createContext<{
-  setData: Dispatch<SetStateAction<KanbanDataType>>;
-  setDraggedItem: Dispatch<SetStateAction<DraggedItemType | null>>;
+export const KanbanDataContext = createContext<{
   draggedItem: DraggedItemType | null;
-}>({ setData: () => {}, setDraggedItem: () => {}, draggedItem: null });
+}>({
+  draggedItem: null,
+});
+
+export const KanbanActionsContext = createContext<{
+  setData: Dispatch<SetStateAction<KanbanDataType>>;
+  setDraggedItem: Dispatch<SetStateAction<{ sourcecolumnId: number; cardId: number } | null>>;
+}>({
+  setData: () => {},
+  setDraggedItem: () => {},
+});

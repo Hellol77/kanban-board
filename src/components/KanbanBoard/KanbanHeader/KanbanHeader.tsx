@@ -1,5 +1,5 @@
 import { TextInput } from '@/components/common';
-import { KanbanContext } from '@/components/KanbanBoard/KanbanContext';
+import { KanbanActionsContext } from '@/components/KanbanBoard/KanbanContext';
 import { useContext } from 'react';
 
 interface KanbanHeaderProps {
@@ -7,7 +7,7 @@ interface KanbanHeaderProps {
 }
 
 const KanbanHeader = ({ projectName }: KanbanHeaderProps) => {
-  const { setData } = useContext(KanbanContext);
+  const { setData } = useContext(KanbanActionsContext);
   const onChangeProjectName = (value: string) => {
     setData((prev) => ({ ...prev, projectName: value }));
   };

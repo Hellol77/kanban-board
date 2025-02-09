@@ -2,7 +2,7 @@ import { Button, Text } from '@/components/common';
 import styled from 'styled-components';
 import PlusIcon from '@/assets/plus.svg?react';
 import { useContext } from 'react';
-import { KanbanContext } from '@/components/KanbanBoard/KanbanContext';
+import { KanbanActionsContext } from '@/components/KanbanBoard/KanbanContext';
 
 interface EmptyColumnProps {
   columnId: number;
@@ -25,7 +25,7 @@ const S = {
 };
 
 const EmptyColumn = ({ columnId }: EmptyColumnProps) => {
-  const { setData } = useContext(KanbanContext);
+  const { setData } = useContext(KanbanActionsContext);
 
   const onClickAddCard = (columnId: number) => {
     setData((prev) => ({

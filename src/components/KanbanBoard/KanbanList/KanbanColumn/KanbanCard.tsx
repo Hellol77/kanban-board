@@ -3,7 +3,7 @@ import XIcon from '@/assets/x.svg?react';
 import { CardType } from '@/types/kanban';
 import { Circle, TagInput, TextAreaInput } from '@/components/common';
 import TagPlusIcon from '@/assets/tagPlus.svg?react';
-import { KanbanContext } from '@/components/KanbanBoard/KanbanContext';
+import { KanbanActionsContext } from '@/components/KanbanBoard/KanbanContext';
 import { DragEvent, useContext, useRef, useState } from 'react';
 import DotsHorizontal from '@/assets/dotsHorizontal.svg?react';
 import useClickOutSide from '@/hooks/useClickOutside';
@@ -82,7 +82,7 @@ const S = {
 };
 
 const KanbanCard = ({ columnId, card }: KanbanCardProps) => {
-  const { setDraggedItem, setData } = useContext(KanbanContext);
+  const { setDraggedItem, setData } = useContext(KanbanActionsContext);
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const settingModalRef = useRef<HTMLDivElement>(null);
   useClickOutSide(settingModalRef, () => setIsSettingOpen(false));

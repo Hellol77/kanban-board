@@ -4,7 +4,7 @@ import { DragEvent, useContext } from 'react';
 import styled from 'styled-components';
 import EmptyColumn from '@/components/KanbanBoard/KanbanList/KanbanColumn/EmptyColumn';
 import KanbanCard from '@/components/KanbanBoard/KanbanList/KanbanColumn/KanbanCard';
-import { KanbanContext } from '@/components/KanbanBoard/KanbanContext';
+import { KanbanActionsContext, KanbanDataContext } from '@/components/KanbanBoard/KanbanContext';
 
 interface KanbanColumnProps {
   column: KanbanColumnType;
@@ -27,7 +27,8 @@ const S = {
 };
 
 const KanbanColumn = ({ column }: KanbanColumnProps) => {
-  const { setData, draggedItem } = useContext(KanbanContext);
+  const { setData } = useContext(KanbanActionsContext);
+  const { draggedItem } = useContext(KanbanDataContext);
   const handleDragOver = (e: DragEvent, columnId: number) => {
     e.preventDefault();
     if (draggedItem && draggedItem.sourcecolumnId !== columnId) {

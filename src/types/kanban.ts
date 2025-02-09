@@ -9,6 +9,7 @@ export interface KanbanColumnType {
   columnId: number;
   title: string;
   cards: CardType[];
+  indelible?: boolean;
 }
 
 export interface CardType {

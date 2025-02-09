@@ -80,7 +80,7 @@ const ColumnHeader = ({ column, setData }: ColumnHeaderProps) => {
       {column.cards.length !== 0 && (
         <Button onClick={() => onClickAddCard(column.columnId)} icon={<PlusIcon />} aria-label='카드 추가' />
       )}
-      {column.cards.length === 0 && column.columnId > 3 && (
+      {column.cards.length === 0 && !column.indelible && (
         <Button
           onClick={() => onClickDeleteColumn(column.columnId)}
           icon={<XIcon width={16} />}

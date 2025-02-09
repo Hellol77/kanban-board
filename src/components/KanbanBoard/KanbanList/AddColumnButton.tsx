@@ -1,17 +1,10 @@
 import { Button } from '@/components/common';
-import { KanbanContext } from '@/components/KanbanBoard/KanbanContext';
+import { KanbanActionsContext } from '@/components/KanbanBoard/KanbanContext';
 import { useContext } from 'react';
-import { styled } from 'styled-components';
 import PlusIcon from '@/assets/plus.svg?react';
 
-const S = {
-  AddListWrapper: styled.div`
-    flex-shrink: 0;
-  `,
-};
-
 const AddColumnButton = () => {
-  const { setData } = useContext(KanbanContext);
+  const { setData } = useContext(KanbanActionsContext);
   const onClickAddColumn = () => {
     setData((prev) => ({
       ...prev,
@@ -26,9 +19,7 @@ const AddColumnButton = () => {
     }));
   };
   return (
-    <S.AddListWrapper>
-      <Button onClick={() => onClickAddColumn()} icon={<PlusIcon />} aria-label='칼럼 추가' text='Add another list' />
-    </S.AddListWrapper>
+    <Button onClick={() => onClickAddColumn()} icon={<PlusIcon />} aria-label='칼럼 추가' text='Add another list' />
   );
 };
 

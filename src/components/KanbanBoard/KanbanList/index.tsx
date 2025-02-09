@@ -15,6 +15,10 @@ const S = {
     gap: 16px;
     width: 100%;
     max-width: calc(200px * 4 + 16px * 3);
+    margin-top: 4rem;
+  `,
+  AddListWrapper: styled.div`
+    flex-shrink: 0;
   `,
 };
 
@@ -24,7 +28,9 @@ const KanbanList = ({ columns }: KanbanListProps) => {
       {columns.map((column) => (
         <KanbanColumn key={column.columnId} column={column} />
       ))}
-      <AddColumnButton />
+      <S.AddListWrapper>
+        <AddColumnButton />
+      </S.AddListWrapper>
     </S.ListWrapper>
   );
 };
